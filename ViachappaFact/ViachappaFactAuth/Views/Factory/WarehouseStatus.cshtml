@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ViachappaFactAuth.Models.WarehouseStatusItem>
+
+@{
+    ViewBag.Title = "WarehouseStatus";
+}
+
+<h2>Содержимое складов</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Артикул</th>
+        <th>Наименование</th>
+        <th>Кол-ао</th>
+        <th>Ед. измерения</th>
+        <th>Id склада </th>
+    </tr>
+
+@foreach (var item in Model.OrderBy(x=>x.Articul)) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Articul)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Measure)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Warehouse_Id)
+        </td>
+    </tr>
+}
+
+</table>

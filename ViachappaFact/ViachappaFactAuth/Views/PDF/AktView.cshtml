@@ -1,0 +1,92 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    Layout = null;
+    int i = 1;
+
+    var mybankacc = Model.Partner.PartnerBankAccounts.First();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TORG12View</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+        <h1 style="font:22px;margin-bottom:0px">Акт № @Model.DocNumber от @Model.DocDate.ToLongDateString()</h1>
+        <hr style="height:1px;background-color:black;margin-top:0px" /><br />
+
+        <table width="100%">
+            <tr>
+                <td style="text-align: left; font: 15px;width=30%">Исполнитель:</td>
+                <td style="text-align: left; font: 14px bold">@Model.Partner.ShortName, ИНН @Model.Partner.INN, @Model.Partner.KPP, @Model.Partner.LegalAddress, р/с @mybankacc.PaymentAccount, в банке @mybankacc.BankName, БИК @mybankacc.BIK, к/с @mybankacc.CorrespondentAccount</td>
+            </tr>
+            <tr>
+                <td style="text-align: left; font: 15px;width=30%">Заказчик:</td>
+                <td style="text-align: left; font: 14px bold">@Model.Partner.ShortName, ИНН @Model.Partner.INN, @Model.Partner.KPP, @Model.Partner.LegalAddress, р/с @mybankacc.PaymentAccount, в банке @mybankacc.BankName, БИК @mybankacc.BIK, к/с @mybankacc.CorrespondentAccount</td>
+            </tr>
+            <tr>
+                <td style="text-align: left; font: 15px;width=30%">Основание:</td>
+                <td style="text-align: left; font: 14x bold">Договор №@Model.Contract.ContractNumber от @Model.Contract.ContractDate</td>
+            </tr>
+        </table>
+        <br />
+
+        <table width="100%">
+
+            <tr style="text-align:center;font:14px;">
+                <td style=" border: 1px solid; border-top: 2px solid; border-left: 2px solid">
+                    №
+                </td>
+                <td style="        border: 1px solid;
+        border-top: 2px solid">
+                    Наименование работ, услуг
+                </td>
+                <td style="border:1px solid;border-top:2px solid">Кол-во</td>
+                <td style="border: 1px solid;border-top:2px solid">Ед.</td>
+                <td style="border: 1px solid;border-top:2px solid">Цена</td>
+                <td style="border:1px solid;border-top:2px solid;border-right:2px solid">Сумма</td>
+            </tr>
+            @foreach (var t in Model.OrderPositions)
+            {
+                <tr style="text-align: center; font: 14px">
+                    <td style="border:1px solid;border-left:2px solid">@i</td>
+                    <td style="border:1px solid">@t.Material.Articul @t.Material.Name</td>
+                    <td style="border:1px solid">@t.Count</td>
+                    <td style="border:1px solid">@t.Material.UnitName</td>
+                    <td style="border:1px solid">@((t.Price * (decimal)(t.VATRate.Price + 1)).ToString("C2"))</td>
+                    <td style="border:1px solid;border-right:2px solid">@((t.Count * (double)t.Price * (double)(t.VATRate.Price + 1)).ToString("C2"))</td>
+                </tr>
+                {
+                    i = i + 1;
+
+                }
+            }
+            <tr><td style="border-top:2px solid;"></td><td style="border-top:2px solid;"></td><td style="border-top:2px solid;"></td><td style="border-top:2px solid;"></td><td style="border-top:2px solid;"></td><td style="border-top:2px solid;"></td></tr>
+            <tr style="text-align:right"><td></td><td></td><td></td><td></td><td>Итого:</td><td>@Model.OrderPositions.Sum(x => ((double)x.VATRate.Price + 1) * (double)x.Price * x.Count).ToString("C2")</td></tr>
+            <tr style="text-align:right"><td></td><td></td><td></td><td></td><td>В том числе НДС</td><td>@Model.OrderPositions.Sum(x => (((double)x.VATRate.Price) * (double)x.Price * x.Count)).ToString("C2")</td></tr>
+        </table>
+        <p style="margin-bottom:0">Всего оказано услуг @Model.OrderPositions.Count(), на сумму @Model.OrderPositions.Sum(x => ((double)x.VATRate.Price + 1) * (double)x.Price * x.Count).ToString("C2") @mybankacc.Currency.ShortName</p>
+        <p style="font:14px bold;margin-top:0">@RSDN.RusCurrency.Str(Model.OrderPositions.Sum(x => (double)(((double)x.VATRate.Price + 1) * (double)x.Price * x.Count)))</p>
+        double
+        <p>Вышеперечисленные услуги выполнены полностью и в срок. Заказчик претензий по объему, качеству и срокам оказания услуг не имеет.</p>
+        <hr style="height:1px;background-color:black;margin-top:0px" />
+        <table width="100%">
+            <tr style="font:16px bold;text-align:left"><td style="width:60%">ИСПОЛНИТЕЛЬ</td><td>ЗАКАЗЧИК</td></tr>
+            <tr style="text-align:left;font:12px solid"><td>Генеральный директор @Model.Partner.Director</td><td>@Model.Partner.ShortName</td></tr>
+            <tr style="text-align:left;margin-bottom:0px"><td><hr style="width:80%;height:0.01px;background-color:black;border-color:white;margin-left:0;margin-top:25px;margin-bottom:0" /></td><td> <hr style="height:0.01px;background-color:black;border-color:white;margin-top:25px" /></td></tr>
+            <tr style="text-align:center;font:12px solid;margin-top:0px"><td>@Model.Partner.Director</td><td></td></tr>
+        </table>
+    </div>
+</body>
+</html>

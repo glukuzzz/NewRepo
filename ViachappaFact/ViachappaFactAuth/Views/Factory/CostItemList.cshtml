@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.CostItem>
+
+@{
+    ViewBag.Title = "CostItemList";
+}
+
+<h2>Статьи затрат</h2>
+
+<p>
+    @Html.ActionLink("Добавить статью затрат", "CostItemCreate", new { }, new { @class = "btn btn-dark" })
+</p>
+<table class="table">
+    <tr>
+        <th>Группа затрат</th>
+        <th>Наименование</th>
+        <th>Вид затрат</th>
+        <th>Характер затрат</th>
+        <th>Вид расходов (НУ)</th>
+        <th></th>
+    </tr>
+    @foreach (var t in Model.OrderBy(x=>x.CostGroup_Id).ThenBy(x=>x.CostType_Id).ThenBy(x=>x.CostNature_Id).ThenBy(x=>x.ExpensesType_Id))
+    {
+        <tr>
+            <td>@t.CostGroup.Name</td>
+            <td>@t.Name</td>
+            <td>@t.CostType.Name</td>
+            <td>@t.CostNature.Name</td>
+            <td>@t.ExpensesType.Name</td>
+            <td>
+                @Html.ActionLink("Изменить","CostItemCreate",  new { id = t.Id }) <hr />
+                @Html.ActionLink("Удалить","CostItemCreate",  new { id = t.Id, delete = 1 })
+            </td>
+        </tr>
+    }
+</table>

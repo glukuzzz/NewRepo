@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.Organisation>
+
+@{
+    ViewBag.Title = "OrganisationList";
+}
+
+<h2>OrganisationList</h2>
+
+<p>
+    @Html.ActionLink("создать", "OrganisationCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShortName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.INN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KPP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OGRN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OKPO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OKATO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IFNS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IFNS_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IFNS_RegDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IFNS_RegName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShortName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.INN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KPP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OGRN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OKPO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OKATO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IFNS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IFNS_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IFNS_RegDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IFNS_RegName)
+        </td>
+        <td>
+            @Html.ActionLink("изменить", "OrganisationCreate", new { id=item.Id }) |
+            @Html.ActionLink("удалить", "OrganisationCreate", new { id=item.Id, delete =1 })
+        </td>
+    </tr>
+}
+
+</table>

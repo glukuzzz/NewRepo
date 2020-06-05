@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.OrderTransferDoc>
+
+@{
+    ViewBag.Title = "OrderTransferDocs";
+}
+
+<h2>ТОРГ-12</h2>
+<link rel="stylesheet" href="~/Content/font-awesome.min.css" />
+<p>
+    @Html.ActionLink("Создать новый Торг-12", "CreateTorg12")
+</p>
+<table class="table">
+    <tr>
+        <th>  Номер документа </th>
+        <th>Дата документа</th>
+        <th>Пользователь который провел</th>
+        <th>Дата операции</th>
+        <th>Тип исходного документа</th>
+        <th>УПД</th>
+        <th>Проведен</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocNumber)
+        </td>
+        <td>@item.DocDate.ToShortDateString()
+        </td>
+        <td>
+            @item.AspNetUser.LastName @item.AspNetUser.FirstName
+        </td>
+        <td>@item.OperDate</td>
+        <td>
+            @if (item.OrderInvoice_Id.HasValue)
+            {
+                <i class="fa fa-check" aria-hidden="true"></i>
+            }
+        </td>
+        <td> @if (item.isPost)  { <i class="fa fa-check" aria-hidden="true"></i> }</td>
+        <td>
+            @Html.ActionLink("Детально", "Torg12", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

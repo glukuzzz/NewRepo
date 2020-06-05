@@ -1,0 +1,134 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    ViewBag.Title = "OutgoingOrder";
+}
+
+<h2>Счет № @Model.DocNumber от @Model.DocDate.ToLongDateString()</h2>
+
+<div>
+    <hr />
+    @if (ViewBag.Edit)
+    {
+        <form method="post" action="@Url.Action("OutgoingOrder", "Factory", new {id = Model.Id })">
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.DocDate)
+            @Html.HiddenFor(x => x.DocNumber)
+            @Html.HiddenFor(x => x.OperDate)
+            <label for="Organisation_Id">Организация</label>
+            @Html.DropDownListFor(x => x.Organisation_Id, new SelectList(new Dictionary<int, string>(), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+            <label for="Partner_Id">Контрагент</label>
+            @Html.DropDownListFor(x => x.Partner_Id, new SelectList(new Dictionary<int, string>(), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+            <label for="Contract_Id">Договор</label>
+            @Html.DropDownListFor(x => x.Contract_Id, new SelectList(new Dictionary<int, string>(), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+            <br /><hr />
+            <input type="submit" value="Сохранить" class="btn btn-dark" />
+        </form>
+        @Html.ActionLink("Отменить изменения", "OutgoingOrder", "Factory", new { }, new { id = Model.Id })
+    }
+    else
+    {
+        <dl class="dl-horizontal">
+            <dt>Контрагент</dt>
+            <dd> @Model.Partner.Name</dd>
+            <dt>Организация</dt>
+            <dd>
+                @Model.Organisation.FullName
+        </dd>
+        <dt>Договор</dt>
+        <dd> @Model.Contract.ContractNumber @Model.Contract.Abstract от @Model.Contract.ContractDate</dd>
+    </dl>
+    @Html.ActionLink("Редактировать шапку документа", "OutgoingOrder", "Factory", new { id = Model.Id, edit = 1 }, new { @class = "btn btn-dark" })
+}
+</div>
+
+@if (Model.OrderPositions.Count > 0)
+{
+    <h4>Список позиций</h4>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Артикул</th>
+            <th>Продукт</th>
+            <th>Колво</th>
+            <th>Цена</th>
+            <th>Сумма</th>
+        </tr>
+        @foreach (var t in Model.OrderPositions)
+        {
+            <tr>
+                <td>@t.Material.Articul</td>
+                <td>@t.Material.Name</td>
+                <td>@t.Count</td>
+                <td>@t.Price.ToString("C2")</td>
+                <td>@((t.Count * (double)t.Price).ToString("C2"))</td>
+            </tr>
+        }
+    </table>
+}
+
+@if (true)
+{
+    Html.RenderPartial("OutgoingOrderPositionCreate", new ViachappaFactAuth.DB.OrderPosition { Order_Id = Model.Id });
+}
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<script>
+    $(document).ready(function () {
+        $('#Organisation_Id').select2({
+            ajax: {
+
+                url: '/dropdownlist/organisations',
+                type: "post",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        key: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            },
+        });
+        $('#Partner_Id').select2({
+            ajax: {
+
+                url: '/dropdownlist/Partners',
+                type: "post",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        key: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            },
+        });
+        $('#Partner_Id').on('change', function () {
+            var url = "/dropdownlist/ContractsForPartner/" + $('#Partner_Id').val();
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                async: false,
+                success: function (data) {
+
+                    $('#Contract_Id').replaceWith(data);
+                }
+            });
+        });
+    });
+</script>

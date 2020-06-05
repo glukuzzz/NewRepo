@@ -1,0 +1,69 @@
+﻿@model ViachappaFactAuth.DB.CostItem
+
+@{
+    ViewBag.Title = "Статья затрат";
+}
+
+    <h2>Статья затрат</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x=>x.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.CostGroup_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CostGroup_Id, new SelectList((ViewBag.CostGroups as Dictionary<int,string>).OrderBy(x=>x.Value), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CostGroup_Id, "", new { @class = "text-danger" })
+                <br />
+                @Html.ActionLink("Cоздать группу", "CostGroupCreate", new { }, new { @class = "btn btn-success" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               <input type="text" id="Name" name="Name" class="form-control" required  value="@Model.Name"/>
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CostType_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CostType_Id, new SelectList(ViewBag.CostTypes, "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CostType_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CostNature_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CostNature_Id, new SelectList(ViewBag.CostNatures, "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CostNature_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExpensesType_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ExpensesType_Id, new SelectList(ViewBag.ExpensesTypes, "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExpensesType_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-dark" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

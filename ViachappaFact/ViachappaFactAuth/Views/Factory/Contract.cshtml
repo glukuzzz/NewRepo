@@ -1,0 +1,134 @@
+﻿@model ViachappaFactAuth.DB.Contract
+
+@{
+    ViewBag.Title = "Contract";
+}
+
+<h2>Договор</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContractNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContractDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Abstract)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Abstract)
+        </dd>
+        <dt>
+           Договор
+        </dt>
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.FileName))
+            {
+                @Html.ActionLink("Скачать", "DownloadContractDoc", new { id = Model.Id });
+            }
+        </dd>
+    </dl>
+</div>
+<h4>Список дополнительных соглашений</h4>
+@if (Model.ContractAdds.Count > 0)
+{
+
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Номер</th>
+            <th>Дата</th>
+            <th>Описание</th>
+            <th></th>
+        </tr>
+        @foreach (var t in Model.ContractAdds)
+        {
+    <tr>
+        <td>@t.DocNumber</td>
+        <td>@t.Date.ToShortDateString()</td>
+        <td>@t.Abstract</td>
+        <td>
+            @if (!string.IsNullOrEmpty(t.FileName))
+            {
+                @Html.ActionLink("Скачать", "DownloadContractAdd", new { id = t.Id });
+            }
+        </td>
+    </tr>
+        }
+    </table>
+}
+
+<h4>Добавить доп. соглашение</h4>
+<form action="@Url.Action("ContractAddCreate", "Factory", new {  })" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(x => x.Id)
+    <label for="Abstract">Номер</label>
+    <input type="text" name="DocNumber" id="DocNumber" required class="form-control" />
+    <label for="Date">Дата</label>
+    <input type="date" name="Date" id="Date" required class="form-control" />
+    <label for="Abstract">Описание</label>
+    <textarea class="form-control" type="text" name="Abstract" id="Abstract" style="min-width:100%" rows="3" required></textarea>
+    <label for="File">Скан документа</label>
+    <input class="form-control-file form-control" type="file" name="File" id="File" />
+    <br />
+    <input class="btn btn-success btn-lg" type="submit" value="Сохранить" />
+</form>
+<hr />
+<h4>Список спецификаций</h4>
+
+@if (Model.ContractSpecs.Count > 0)
+{
+
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Номер</th>
+            <th>Дата</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th></th>
+        </tr>
+        @foreach (var t in Model.ContractSpecs)
+        {
+            <tr>
+                <td>@t.DocNumber</td>
+                <td>@t.Date.ToShortDateString()</td>
+                <td>@t.Abstract</td>
+                <td>@t.Price.ToString("C2")</td>
+                <td>
+                    @if (t.FileName.Length>3)
+                    {
+                        @Html.ActionLink("Скачать", "DownloadContractSpec", new { id = t.Id })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<h4>Добавить спецификацию</h4>
+<form action="@Url.Action("ContractSpecCreate", "Factory", new {  })" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(x => x.Id)
+    <label for="Abstract">Номер</label>
+    <input type="text" name="DocNumber" id="DocNumber" required class="form-control" />
+    <label for="Date">Дата</label>
+    <input type="date" name="Date" id="Date" required class="form-control" />
+    <label for="Abstract">Описание</label>
+    <textarea class="form-control" type="text" name="Abstract" id="Abstract" style="min-width:100%" rows="3" required></textarea>
+    <label for="Price">Цена</label>
+    <input type="number" name="Price" id="Price" required class="form-control" step="0.01" min="0" />
+    <label for="File">Скан документа</label>
+    <input class="form-control-file form-control" type="file" name="File" id="File" />
+    <br />
+    <input class="btn btn-success btn-lg" type="submit" value="Сохранить" />
+</form>
+<hr />
+<p>
+    @Html.ActionLink("Назад", "ContractList")
+</p>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.SubcontoType>
+@{
+    Layout = null;
+}
+@if (ViewBag.Type == "SubcontoArray_Id")
+{
+    <div id="from-container">
+        @foreach (var p in Model)
+        {
+            <label>@p.Name </label>
+            <select class="form-control"  name="from-@p.DbTable"  id="from-@p.DbTable"/>
+        }
+    </div>
+}
+else
+{
+<div id="to-container">
+    @foreach (var p in Model)
+    {
+        <label>@p.Name</label>
+        <select class="form-control @p.DbTable" name="to-@p.DbTable" id="to-@p.DbTable" />
+    }
+</div>
+}
+
+
+

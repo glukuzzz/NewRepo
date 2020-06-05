@@ -1,0 +1,14 @@
+﻿@model List<ViachappaFactAuth.DB.Contract>
+
+@{
+    ViewBag.Title = "ContractsForPartner";
+    Layout = null;
+}
+
+<select name="Contract_Id" id="Contract_Id" class="form-control">
+    @foreach(var t in Model)
+    {
+    <option value="@t.Id">@t.ContractNumber - @t.ContractNumber ( @t.ContractDate)</option>
+    }
+</select>
+

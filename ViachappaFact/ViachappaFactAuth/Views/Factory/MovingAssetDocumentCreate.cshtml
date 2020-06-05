@@ -1,0 +1,56 @@
+﻿@model ViachappaFactAuth.DB.MovingAssetDocument
+
+@{
+    ViewBag.Title = "MovingAssetDocumentCreate";
+}
+
+<h2>MovingAssetDocumentCreate</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>MovingAssetDocument</h4>
+    <hr />
+    <table>
+        <tr>
+            <td style="min-width:600px">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Name">Наименование документа</label>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </td>
+            <td style="min-width:800px">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="DocDate">Дата документа</label>
+                    <div class="col-md-4">
+                        <input class="form-control text-box single-line" data-val="true" data-val-date="Поле DocDate должно содержать дату." data-val-required="Требуется поле DocDate." id="DocDate" name="DocDate" type="date" value="@Model.DocDate" />
+                        @Html.ValidationMessageFor(model => model.DocDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Organisation_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Organisation_Id, new SelectList(new Dictionary<int, string> { { 1, "Моя Организация 1" } }, "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Organisation_Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group lastchild">
+        <input type="submit" value="Создать" class="btn btn-dark" />
+    </div>
+</div>
+}
+<div>
+    @Html.ActionLink("Back to List", "MovingAssetDocumentList")
+</div>
+
+
+

@@ -1,0 +1,360 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    Layout = null;
+    int i = 1;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IncomingOrderView</title>
+    <style type="text/css">
+         TABLE {
+    border-collapse: collapse; /* Убираем двойные границы между ячейками */
+   }
+         TD{
+             font-family:serif;
+         }
+    </style>
+</head>
+<body>
+    <div>
+
+        <table class="table table-bordered">
+            <tr><td style="width:500px"></td><td style="font:6px">Унифицированная форма № ТОРГ-12</td></tr>
+            <tr><td></td><td style="font:6px">Утверждена постановлением Госкомстата</td></tr>
+            <tr><td></td><td style="font:6px">России от 25.12.98 № 132</td></tr>
+        </table>
+        <table class="table">
+            <tr><td style="width:450px"></td><td></td><td style="font:9px; border:1px solid; text-align:center">Код</td></tr>
+            <tr><td style="width:450px"></td><td style="font:9px; text-align:right">Форма по ОКУД</td><td style="font:9px; border:2px solid; text-align:center; border-bottom:1px solid; width:100px">0330212</td></tr>
+            <tr><td style="width:450px; border-bottom:1px solid"></td><td style="font:9px; text-align:right">по ОКПО</td><td style="font:9px; border:2px solid; text-align:center; border-bottom:1px solid;border-top:none"></td></tr>
+            <tr><td style="width:450px; font:3px; text-align:center">(организация-грузоотправитель, адрес, телефон, факс, банковские реквизиты)</td><td style="font:9px"></td><td style="font:9px; border:2px solid; text-align:center; border-bottom: none;border-top:none"></td></tr>
+            <tr><td style="width:450px; border-bottom:1px solid"></td><td style="font:9px;color:white; border-bottom:1px solid black;">по ОКПО</td><td style="font:9px; border:2px solid; text-align:center; border-bottom:1px solid;border-top:none"></td></tr>
+            <tr><td style="width:450px; font:3px; text-align:center">(структура подразделения)</td><td style="font:9px"></td><td style="font:9px; border:2px solid; text-align:center; border-bottom: none;border-top:none"></td></tr>
+            <tr><td style="width:450px; border-bottom:1px solid"></td><td style="font:9px;text-align:right">Вид деятельности по ОКДП</td><td style="font:9px; border:2px solid; text-align:center; border-bottom:1px solid;border-top:none"></td></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+        </table>
+        <br />
+
+        <table class="table">
+            <tr>
+                <td width="300"></td>
+                <td width="50" style="border:1px solid;padding-left:40px;padding-right:40px; text-align:center;font:9px;">Номер<br />документа</td>
+                <td width="50" style="border:1px solid;padding-left:40px;padding-right:40px; text-align:center;font:9px;">Дата<br />составления</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="font:12px bold;text-align:right;">ТОВАРНАЯ НАКЛАДНАЯ</td>
+                <td style="border:2px solid;padding-left:40px;padding-right:40px; text-align:center;font:12px bold;border-right:1px solid">@Model.DocNumber</td>
+                <td style="border:2px solid;padding-left:40px;padding-right:40px; text-align:center;font:12px bold;border-left:none ">@Model.DocDate.ToShortDateString()</td>
+                <td></td>
+            </tr>
+        </table>
+        <br />
+        <table class="table" width="730">
+            <tr>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center;">Но-<br />мер<br />по по-<br />рядку</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">Товар</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">Единица измерения</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Вид<br />упаков-<br />ки</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">Количество</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Масса<br />брутто</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Количест-<br />во<br />(масса<br />нетто)</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Цена,<br />руб. коп.</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Сумма без<br />учета НДС,<br />руб. коп.</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">НДС</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Сумма с учетом<br />НДС,<br />руб. коп.</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid;font:6px;text-align:center">наименование,<br />характеристика, сорт, артикул<br />товара</td>
+                <td style="border:1px solid;font:6px;text-align:center">Код</td>
+                <td style="border:1px solid;font:6px;text-align:center">наиме-<br />нование</td>
+                <td style="border:1px solid;font:6px;text-align:center">код по<br />ОКЕИ</td>
+                <td style="border:1px solid;font:6px;text-align:center">в одном<br />месте</td>
+                <td style="border:1px solid;font:6px;text-align:center">мест,<br />штук</td>
+                <td style="border:1px solid;font:6px;text-align:center">ставка,<br />%</td>
+                <td style="border:1px solid;font:6px;text-align:center">сумма,<br />руб. коп.</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid;font:8px;text-align:center">1</td>
+                <td style="border:1px solid;font:8px;text-align:center">2</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">3</td>
+                <td style="border:1px solid;font:8px;text-align:center">4</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">5</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">6</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">7</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">8</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">9</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">10</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">11</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">12</td>
+                <td style="border:1px solid;font:8px;text-align:center">13</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">14</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">15</td>
+            </tr>
+            @foreach (var t in Model.OrderPositions)
+            {
+                <tr>
+                    <td style="border:1px solid;font:8px bold;text-align:center">@i</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-right:2px solid">@t.Material.Articul --  @t.Material.Name</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-left:2px solid"></td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-left:2px solid; border-right:2px solid">@t.Material.UnitName</td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center">@t.Count</td>
+                    <td style="border:1px solid;font:8px;text-align:center">@t.Price.ToString("C2")</td>
+                    <td style="border:1px solid;font:8px;text-align:center">@(((double)t.Price * (double)t.Count).ToString("C2"))</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-left:2px solid; border-right:2px solid">@t.VATRate.Name.Replace("%", "").Trim()</td>
+                    <td style="border:1px solid;font:8px;text-align:center">@(((double)t.Price * (double)t.VATRate.Price * t.Count).ToString("C2"))</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-right:2px solid">@((((double)t.Price * (double)t.VATRate.Price * t.Count) + ((double)t.Price * (double)t.Count)).ToString("C2"))</td>
+                </tr>
+                {
+                    i = i + 1;
+                }
+            }
+            <tr>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:none;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border: none; font: 8px; text-align: right;border-top:2px solid;">Итого</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => ((double)t.Price * (double)t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid;font:8px;text-align:center;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => ((double)t.Price * (double)(decimal)t.VATRate.Price * t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid; font: 8px; text-align: center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => (((double)t.Price * (double)t.VATRate.Price * t.Count) + ((double)t.Price * t.Count))).ToString("C2"))</td>
+            </tr>
+            <tr>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border: none; font: 8px; text-align: right;">Всего по накладной</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:1px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:1px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:1px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:1px solid;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:1px solid;">@(Model.OrderPositions.Sum(t => ((double)t.Price * t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid;font:8px;text-align:center;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:1px solid;">@(Model.OrderPositions.Sum(t => ((double)t.Price * (double)t.VATRate.Price * t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid; font: 8px; text-align: center;border-top:1px solid;">@(Model.OrderPositions.Sum(t => (((double)t.Price * (double)t.VATRate.Price * t.Count) + ((double)t.Price * (double)t.Count))).ToString("C2"))</td>
+            </tr>
+        </table>
+        <br />
+
+
+        @*<div style="page-break-after: always" />
+
+        <table class="table table-bordered">
+            <tr><td style="width:580px"></td><td style="font:6px">Оборотная сторона формы № ТОРГ-13</td></tr>
+        </table>
+        <br />
+        <table class="table" width="730">
+            <tr>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center;">Но-<br />мер<br />по по-<br />рядку</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">Товар</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">Единица измерения</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Вид<br />упаков-<br />ки</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">Количество</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Масса<br />брутто</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Количест-<br />во<br />(масса<br />нетто)</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Цена,<br />руб. коп.</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Сумма без<br />учета НДС,<br />руб. коп.</td>
+                <td colspan="2" style="border:1px solid;font:6px;text-align:center">НДС</td>
+                <td rowspan="2" style="border:1px solid;font:6px;text-align:center">Сумма с учетом<br />НДС,<br />руб. коп.</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid;font:6px;text-align:center">наименование,<br />характеристика, сорт, артикул<br />товара</td>
+                <td style="border:1px solid;font:6px;text-align:center">Код</td>
+                <td style="border:1px solid;font:6px;text-align:center">наиме-<br />нование</td>
+                <td style="border:1px solid;font:6px;text-align:center">код по<br />ОКЕИ</td>
+                <td style="border:1px solid;font:6px;text-align:center">в одном<br />месте</td>
+                <td style="border:1px solid;font:6px;text-align:center">мест,<br />штук</td>
+                <td style="border:1px solid;font:6px;text-align:center">ставка,<br />%</td>
+                <td style="border:1px solid;font:6px;text-align:center">сумма,<br />руб. коп.</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid;font:8px;text-align:center">1</td>
+                <td style="border:1px solid;font:8px;text-align:center">2</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">3</td>
+                <td style="border:1px solid;font:8px;text-align:center">4</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">5</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">6</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">7</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">8</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">9</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">10</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">11</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">12</td>
+                <td style="border:1px solid;font:8px;text-align:center">13</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">14</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-bottom:2px solid">15</td>
+            </tr>
+            @foreach (var t in Model.OrderPositions)
+            {
+                <tr>
+                    <td style="border:1px solid;font:8px bold;text-align:center">@i</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-right:2px solid">@t.Material.Articul --  @t.Material.Name</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-left:2px solid"></td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-left:2px solid; border-right:2px solid">@t.Material.UnitName</td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center"></td>
+                    <td style="border:1px solid;font:8px;text-align:center">@t.Count</td>
+                    <td style="border:1px solid;font:8px;text-align:center">@t.Price.ToString("C2")</td>
+                    <td style="border:1px solid;font:8px;text-align:center">@((t.Price * t.Count).ToString("C2"))</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-left:2px solid; border-right:2px solid">@t.VATRate.Name.Replace("%", "").Trim()</td>
+                    <td style="border:1px solid;font:8px;text-align:center">@((t.Price * (decimal)t.VATRate.Price * t.Count).ToString("C2"))</td>
+                    <td style="border:1px solid;font:8px;text-align:center;border-right:2px solid">@(((t.Price * (decimal)t.VATRate.Price * t.Count) + (t.Price * t.Count)).ToString("C2"))</td>
+                </tr>
+                {
+                    i = i + 1;
+                }
+            }
+            <tr>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:none;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border: none; font: 8px; text-align: right;border-top:2px solid;">Итого</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => (t.Price * t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid;font:8px;text-align:center;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => (t.Price * (decimal)t.VATRate.Price * t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid; font: 8px; text-align: center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => ((t.Price * (decimal)t.VATRate.Price * t.Count) + (t.Price * t.Count))).ToString("C2"))</td>
+            </tr>
+            <tr>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border:none;font:8px;text-align:center;"></td>
+                <td style="border: none; font: 8px; text-align: right;">Всего по накладной</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;"></td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => (t.Price * t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid;font:8px;text-align:center;">Х</td>
+                <td style="border:1px solid;font:8px;text-align:center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => (t.Price * (decimal)t.VATRate.Price * t.Count)).ToString("C2"))</td>
+                <td style="border:1px solid; font: 8px; text-align: center;border-top:2px solid;">@(Model.OrderPositions.Sum(t => ((t.Price * (decimal)t.VATRate.Price * t.Count) + (t.Price * t.Count))).ToString("C2"))</td>
+            </tr>
+        </table>*@
+
+        <br />
+        <br />
+        <table>
+            <tr style="font:9px; text-align:left"><td width="50" colspan="2">Товарная накладная имеет приложение на</td><td style="border-bottom:1px solid;width:300px"></td><td style="padding-left:20px">листах</td></tr>
+            <tr style="font:9px; text-align:left"><td>и содержит</td><td width="400" colspan="2"></td><td style="padding-left:20px">порядковых номеров записей</td></tr>
+            <tr style="font:6px; text-align:center"><td></td><td colspan="2" style="border-top:1px solid">(прописью)</td><td></td></tr>
+        </table>
+        <br />
+        <table width="100%">
+            <tr style="font:9px; text-align:left"><td></td><td></td><td>Масса груза (нетто)</td><td></td><td></td><td style="border:2px solid; border-bottom:none;width:15%"></td></tr>
+            <tr style="font:6px; text-align:center"><td></td><td></td><td></td><td style="border-top:1px solid;width:40%">(прописью)</td><td></td><td style="border-left:2px solid;border-right:2px solid; border-bottom:1px solid;"></td></tr>
+            <tr style="font:9px; text-align:left"><td>Всего мест</td><td></td><td>Масса груза (брутто)</td><td></td><td></td><td style="border-left:2px solid;border-right:2px solid;"></td></tr>
+            <tr style="font:6px; text-align:center"><td></td><td style="border-top:1px solid;width:20%">(прописью)</td><td></td><td style="border-top:1px solid">(прописью)</td><td></td><td style="border:2px solid; border-top:none"></td></tr>
+        </table>
+
+        <table width="100%">
+            <tr>
+                <td style="border-right:1px solid;vertical-align:top">
+                    <table width="100%" >
+                        <tr style="font:9px; text-align:left"><td>Приложение (паспорта, сертификаты и т.п.) на </td><td style="border-bottom:1px solid"></td><td>листах</td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td>(прописью)</td><td></td></tr>
+                    </table >
+                    <table width="100%">
+                        <tr style="font:9px; text-align:left"><td>Всего отпущено на сумму</td><td style="border-bottom:1px solid"></td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td>(прописью)</td></tr>
+                    </table>
+                    <table width="100%">
+                        <tr style="font:9px; text-align:left"><td style="border-bottom:1px solid"></td><td> руб. </td><td></td><td> коп. </td></tr>
+                    </table>
+
+                    <table class="table" width="100%">
+                        <tr style="font:9px; text-align:left"><td>Отпуск груза разрешил</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td style="border-top:1px solid">(должность)</td><td></td><td style="border-top:1px solid">(подпись)</td><td></td><td style="border-top:1px solid">(расшифровка подписи)</td></tr>
+                        <tr style="font:9px; text-align:left"><td>Главный (старший) бухгалтер</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td></td><td></td><td style="border-top:1px solid">(подпись)</td><td></td><td style="border-top:1px solid">(расшифровка подписи)</td></tr>
+                        <tr style="font:9px; text-align:left"><td>Отпуск груза произвел</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td style="border-top:1px solid">(должность)</td><td></td><td style="border-top:1px solid">(подпись)</td><td></td><td style="border-top:1px solid">(расшифровка подписи)</td></tr>
+                    </table>
+                    <table width="100%">
+                        <tr style="font:9px; text-align:left"><td></td><td>М.П.</td><td></td><td></td><td></td><td>года</td></tr>
+                    </table>
+                </td>
+                <td style="vertical-align:top">
+                    <table width="100%">
+                        <tr style="font:9px; text-align:left"><td>По доверенности №</td><td style="border-bottom:1px solid black;width:100px"></td><td>от</td><td style="border-bottom:1px solid black;width:100px">«&nbsp &nbsp &nbsp &nbsp»</td><td></td><td></td><td></td><td></td></tr>
+                    </table>
+                    <table width="100%">
+                        <tr style="font:9px; text-align:left"><td>выданной</td><td></td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td style="border-top:1px solid">(кем, кому (огранизация должность фамилия))</td></tr>
+                        <tr style="font:9px; text-align:left;color:white"><td colspan="2" style="border-bottom:1px solid black">а</td></tr>
+                        <tr style="font:9px; text-align:left;color:white"><td colspan="2" style="border-bottom:1px solid black">а</td></tr>
+                    </table>
+                    <table class="table" width="100%">
+                        <tr style="font:9px; text-align:left"><td>Отпуск груза разрешил</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td style="border-top:1px solid">(должность)</td><td></td><td style="border-top:1px solid">(подпись)</td><td></td><td style="border-top:1px solid">(расшифровка подписи)</td></tr>
+                        <tr style="font:9px; text-align:left"><td>Отпуск груза произвел</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr style="font:6px; text-align:center"><td></td><td style="border-top:1px solid">(должность)</td><td></td><td style="border-top:1px solid">(подпись)</td><td></td><td style="border-top:1px solid">(расшифровка подписи)</td></tr>
+                    </table>
+                    <table width="100%">
+                        <tr style="font:9px; text-align:left"><td></td><td>М.П.</td><td></td><td></td><td></td><td>года</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    
+</body>
+</html>

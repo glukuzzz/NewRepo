@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.Partner>
+
+@{
+    ViewBag.Title = "Контрагенты";
+}
+
+    <h2>Контрагенты</h2>
+
+<p>
+    @Html.ActionLink("Добавить новый", "PartnerCreate", new { }, new { @class="btn btn-dark"})
+</p>
+<table class="table">
+    <tr>
+        <th>Наименование</th>
+        <th>ИНН</th>
+        <th>КПП</th>
+        <th>Фактичексий адрес</th>
+        <td>Директор</td>
+        <td>Номер телефона</td>
+        <td>Email</td>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.ShortName)</td>
+    <td>@Html.DisplayFor(modelItem => item.INN)</td>
+    <td>@Html.DisplayFor(modelItem => item.KPP)</td>
+    <td>@Html.DisplayFor(modelItem => item.ActualAddress)</td>
+    <td>@Html.DisplayFor(modelItem => item.Director)</td>
+    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+    <td><a href="mailto:@item.Email">@item.Email</a></td>
+    <td>
+        @Html.ActionLink("Изменить", "PartnerCreate", new { id = item.Id })
+    </td>
+</tr>
+}
+</table>

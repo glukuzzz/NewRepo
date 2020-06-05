@@ -1,0 +1,102 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    Layout = null;
+    int i = 1;
+    //var mybankacc = Model.Partner.PartnerBankAccounts.First();
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NakladnayaView</title>
+</head>
+<body>
+    <div>
+        <p style="text-align:right;font: 12px;margin-bottom:0">Типовая межотраслевая форма № М-15</p>
+        <p style="text-align:right;font: 12px;margin-top:0;margin-bottom:0">Утверждена постановлением Госкомстата России</p>
+        <p style="text-align:right;font: 12px;margin-top:0;margin-bottom:0">от 30.10.97 № 71а</p>
+        <h3 style="text-align:center;font: 100;margin-bottom:0">НАКЛАДНАЯ № 1-3</h3>
+        <h4 style="text-align:center;font: 100;margin-top:0">на отпуск материалов на сторону</h4>
+
+        <table style="border-collapse:collapse;width:100%;">
+            <tr><td width="10%"></td><td></td><td></td><td></td><td style="text-align:center;font:13px;border:1px solid black">Коды</td></tr>
+            <tr><td></td><td></td><td rowspan="3" style="border-bottom:1px solid black;vertical-align:bottom;font:12px">Вставить имя, ИНН ,Вставить адрес, р/с , в Вставить банк, БИК , к/с</td><td style="text-align:right;font:13px">Форма по ОКУД</td><td style="text-align:center;font:13px;border:solid black">0315007</td></tr>
+            <tr><td></td><td>Организация</td><td style="text-align:right;font:13px">по ОКПО</td><td style="text-align:center;font:13px;border:solid black">42166915</td></tr>
+        </table>
+        <br />
+
+        <div style="width:100%">
+            <table style="border:1px solid black;border-collapse:separate;width:60%;font:12px;text-align:center;vertical-align:top;margin-left:auto">
+                <tr><td rowspan="2" style="border: 1px solid black;padding:5px">Дата составления</td><td rowspan="2" style="border:1px solid black;padding:5px">Код вида операции</td><td colspan="2" style="border:1px solid black;padding:5px">Отправитель</td><td colspan="2" style="border:1px solid black;padding:5px">Получатель</td><td colspan="3" style="border:1px solid black;padding:5px">Ответственный за доставку</td></tr>
+                <tr><td style="border:1px solid black;padding:5px">структурное подразделение</td><td style="border: 1px solid black;padding:5px">вид деятельности</td><td style="border:1px solid black;padding:5px">структурное подразделение</td><td style="border:1px solid black;padding:5px">вид деятельности</td><td style="border:1px solid black;padding:5px">структурное подразделение</td><td style="border:1px solid black;padding:5px">код деятельности</td><td style="border:1px solid black;padding:5px">код исполнителя</td></tr>
+                <tr><td style="border:1px solid black">01.01.0101</td><td style="border:1px solid black"></td><td style="border:1px solid black"></td><td style="border:1px solid black"></td><td style="border:1px solid black"></td><td style="border:1px solid black"></td><td style="border:1px solid black"></td><td style="border:1px solid black"></td><td style="border:1px solid black"></td></tr>
+            </table>
+        </div>
+        <br />
+
+        <div style="width:100%">
+            <table style="width: 93%;vertical-align: bottom;margin-left:auto">
+                <tr><td style="text-align:right;font:12px">Основание</td><td style="text-align:left;border-bottom:1px solid black;font:12px">Договор давальческой переработки №....  от ДАТА</td><td width="20%"></td></tr>
+                <tr><td style="text-align:right;font:12px">Кому</td><td colspan="2" style="text-align:left;border-bottom:1px solid black;font:12px">ССЫЛКА</td></tr>
+            </table>
+        </div>
+        <br />
+
+        <table style="font:9px;text-align:center;border-collapse:separate;border:1px solid;vertical-align:top">
+            <tr><td colspan="2" style="border:1px solid black;padding:5px">Корреспондирующий счет</td><td colspan="2" style="border:1px solid black;padding:5px">Материальные ценности</td><td colspan="2" style="border:1px solid black;padding:5px">Единица измерения</td><td colspan="2" style="border:1px solid black;padding:5px">Количество</td><td rowspan="2" style="border:1px solid black;padding:5px">Цена, руб. коп.</td><td rowspan="2" style="border:1px solid black;padding:5px">Сумма без учета НДС, руб. коп.</td><td rowspan="2" style="border:1px solid black;padding:5px">Сумма НДС, руб. коп.</td><td rowspan="2" style="border:1px solid black;padding:5px">Всего с учетом НДС, руб. коп.</td><td colspan="2" style="border:1px solid black;padding:5px">Номер</td><td rowspan="2" style="border:1px solid black;padding:5px">Порядковый номер записи по складской картотеке</td></tr>
+            <tr>
+                <td style="border:1px solid black;padding:5px">счет, субсчет</td>
+                <td style="border:1px solid black;padding:5px">код аналитического учета</td>
+                <td style="border: 1px solid black;padding: 5px">наименование, сорт, марка, размер</td>
+                <td style="border: 1px solid black;padding:5px">номенклатурный номер</td>
+                <td style="border:1px solid black;padding:5px">код</td>
+                <td style="border: 1px solid black; padding: 5px">наименование</td>
+                <td style="border: 1px solid black;padding: 5px">надлежит отпустить</td>
+                <td style="border:1px solid black;padding:5px">отпущено</td>
+                <td style="border: 1px solid black;padding: 5px">инвентарный</td>
+                <td style="border:1px solid black;padding:5px">паспорта</td>
+            </tr>
+            <tr><td style="border:1px solid black;padding:2px;font:9px">1</td><td style="border:1px solid black;padding:2px;font:9px">2</td><td style="border:1px solid black;padding:2px;font:9px">3</td><td style="border:1px solid black;padding:2px;font:9px">4</td><td style="border:1px solid black;padding:2px;font:9px">5</td><td style="border:1px solid black;padding:2px;font:9px">6</td><td style="border:1px solid black;padding:2px;font:9px">7</td><td style="border:1px solid black;padding:2px;font:9px">8</td><td style="border:1px solid black;padding:2px;font:9px">9</td><td style="border:1px solid black;padding:2px;font:9px">10</td><td style="border:1px solid black;padding:2px;font:9px">11</td><td style="border:1px solid black;padding:2px;font:9px">12</td><td style="border:1px solid black;padding:2px;font:9px">13</td><td style="border:1px solid black;padding:2px;font:9px">14</td><td style="border:1px solid black;padding:2px;font:9px">15</td></tr>
+            @foreach (var t in Model.OrderPositions)
+            {
+                <tr style="text-align: center; font: 13px">
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid;text-align:left">@t.Material.Name</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid">@i</td>
+                </tr>
+                {
+                    i = i + 1;
+
+                }
+            }
+        </table>
+
+
+        <p style="font:13px;margin-bottom:auto;margin-top:auto">Всего отпущено ССЫЛКА</p>
+        <p style="font:11px;margin-top:auto">На сумму ССЫЛКА</p>
+
+        <table style="width:100%;border-collapse:separate;text-align:center">
+            <tr><td style="font:14px;text-align:left;width:5%">Отпуск разрешил</td><td style="border-bottom:1px solid"></td><td style="border-bottom:1px solid"></td><td style="border-bottom:1px solid"></td><td colspan="2" style="font:14px;text-align:left;padding-left:20px">Главный бухгалтер</td><td style="border-bottom:1px solid"></td><td style="border-bottom:1px solid"></td><td style="width:5%"></td></tr>
+            <tr><td></td><td style="font:9px;margin-top:0px">должность</td><td style="font:9px;margin-top:0px">подпись</td><td style="font:9px;margin-top:0px">расшифровка подписи</td><td colspan="2"></td><td style="font:9px;margin-top:0px">подпись</td><td style="font:9px;margin-top:0px">расшифровка подписи</td><td style="width:5%"></td></tr>
+            <tr><td style="font:14px;text-align:left;width:5%">Отпустил</td><td style="border-bottom:1px solid"></td><td style="border-bottom:1px solid"></td><td style="border-bottom:1px solid"></td><td style="font:14px;text-align:left;padding-left:20px">Получил</td><td style="border-bottom:1px solid"></td><td style="border-bottom:1px solid"></td><td style="border-bottom:1px solid"></td><td style="width:5%"></td></tr>
+            <tr><td></td><td style="font:9px;margin-top:0px">должность</td><td style="font:9px;margin-top:0px">подпись</td><td style="font:9px;margin-top:0px">расшифровка подписи</td><td></td><td style="font:9px;margin-top:0px">должность</td><td style="font:9px;margin-top:0px">подпись</td><td style="font:9px;margin-top:0px">расшифровка подписи</td><td style="width:5%"></td></tr>
+        </table>
+    </div>
+</body>
+</html>

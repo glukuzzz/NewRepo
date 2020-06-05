@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.MovingAssetDocumentPosition>
+
+@{
+    ViewBag.Title = "MovingAssetDocumentPositionList";
+}
+
+<h2>Список позиции группового документа</h2>
+
+<table class="table">
+    <tr>
+
+        <th>Наименование</th>
+        <th>Счет Дт</th>
+        <th>Cубконто Дт</th>
+        <th>Счет КТ</th>
+        <th>Cубконто Кт</th>
+        <th>Стоимость</th>
+        @*<th></th>*@
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Content)
+    </td>
+    <td>
+        @item.SubcontoArray.PlanAccountType.Number  @item.SubcontoArray.PlanAccountType.Name
+    </td>
+    <td>
+    @foreach(var p in item.SubcontoArray.PlanAccountType.SubcontoTypes)
+    {
+    @p.Name <hr/>
+    }
+    </td>
+    <td>@item.SubcontoArray1.PlanAccountType.Number  @item.SubcontoArray1.PlanAccountType.Name</td>
+    <td>
+        @foreach (var p in item.SubcontoArray1.PlanAccountType.SubcontoTypes)
+        {
+            @p.Name <hr />
+        }
+    </td>
+    <td>@item.Cost.ToString("C2")</td>
+    @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>*@
+</tr>
+}
+
+</table>

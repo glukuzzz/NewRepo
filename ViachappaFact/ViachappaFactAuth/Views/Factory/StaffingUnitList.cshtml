@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.StaffingUnit>
+
+@{
+    ViewBag.Title = "Штатное расписание";
+}
+
+<h2>Штатное расписание</h2>
+
+<p>
+    @Html.ActionLink("Добавить", "StaffingUnitCreate")
+</p>
+
+@foreach (var p in Model.GroupBy(x => x.Department_Id).OrderBy(x=>x.Key))
+{
+    <h4>@Model.First(x=>x.Department_Id == p.Key).Department.Name</h4>
+    <table class="table">
+        <tr>
+            <th>Должность</th>
+            <th>Тарифная ставка</th>
+            <th>Сотрудник</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Where(x=>x.Department_Id == p.Key).OrderBy(x=>x.UnitName))
+        {
+            <tr>
+                <td width="300">
+                    @Html.DisplayFor(modelItem => item.UnitName)
+                </td>
+                <td>@item.Salary.ToString("C2")</td>
+                <td>
+                    @if (item.EmployeeStaffingUnits.Count>0)
+                    {
+                    <p>@item.EmployeeStaffingUnits.First().Employee.LastName @item.EmployeeStaffingUnits.First().Employee.FirstName @item.EmployeeStaffingUnits.First().Employee.SecondName</p>
+                    }
+                    else
+                    {
+                       @Html.ActionLink("Назначить","EmployeeToStuffingUnit", new { id = item.Id }, new { @class="btn btn-success"})
+                    }
+                    @Html.DisplayFor(modelItem => item.Employee_Id)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+}
+

@@ -1,0 +1,538 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/select2.min.css" />
+    <script src="~/Scripts/select2.min.js"></script>
+    <link rel="stylesheet" href="~/Content/DataTables/media/css/jquery.dataTables.min.css" />
+    <script src="~/Scripts/DataTables/media/js/jquery.dataTables.min.js"></script>
+    <style>
+        .dropdown-submenu {
+            position: relative;
+        }
+
+            .dropdown-submenu a::after {
+                transform: rotate(-90deg);
+                position: absolute;
+                right: 6px;
+                top: .8em;
+            }
+
+            .dropdown-submenu .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-left: .1rem;
+                margin-right: .1rem;
+            }
+
+        .my-fluid-container {
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body style="padding:0px;">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav mr-auto">
+                    @if (User.Identity.IsAuthenticated && new[] { "glukuzzz@gmail.com" }.Contains(User.Identity.Name))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Документы</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Управление продажами", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Документы контрагентов", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("План продаж", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Помощник планирования", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Планирование", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        @*<li>@Html.ActionLink("Журнал заказы покупателей", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Заказ покупателя", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Счет на оплату покупателю", "OutgoingOrders", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("Изменение заказа покупателя", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Корректировка заказа покупателя", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        @*<li>@Html.ActionLink("Закрытие заказов покупателей", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Реализация товаров и услуг", "OutgoingOrders", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Реализация отгруженных товаров", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Реализация услуг по переработке", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Возврат услуг по переработке", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Акт об оказании производственных услуг", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("Отчет коммисионера о продажах", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Возврат товаров от покупателя", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Счет-фактура выданный", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Корректировка долга", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Акт сверки взаиморасчетов", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Управление закупками", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Документы контрагентов", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("План закупок", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Помощник планирования", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Планирование", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        @*<li>@Html.ActionLink("Установка значений точки заказа", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        @*<li>@Html.ActionLink("Журнал заказы поставщика", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Заказ поставщику", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Счет на оплату поставщику", "IncomingOrders", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("Корректировка заказа поставщику", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        @*<li>@Html.ActionLink("Размещение заказа", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Закрытие заказов поставщикам", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Поступление товаров и услуг", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Получение услуг по переработке", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Поступление доп. расходов", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("ГТД по импорту", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        @*<li>@Html.ActionLink("Отчет комитенту о продажах товаров", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Возврат товаров поставщику", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Счет-фактура полученный", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Корректировка долга", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Акт сверки взаиморасчетов", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Доверенность", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Авансовый отчет", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Управление затратами", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Учет производственных операций", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Требование-накладная", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("Изменение лимита отпуска материалов", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Прочие затраты", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Корректировка общих затрат", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Регламентные производственные операции", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Инвентаризация незавершенного производства", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Инвентаризация брака в производстве", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Списание незавершенного производства", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Корректировка незавершенного производства", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Оприходование незавершенного производства", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Оприходование материалов из производства", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Распредение материалов на выпуск", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Распредение прочих затрат", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Услуги собственным подразделениям", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Установка долей распределения долей по проектам", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Установка базы распределения затрат", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Управление запасами", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Учет производственных операции", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Требование накладная", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("Изменение лимита отпуска материалов", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Прочие затраты", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Корректировка прочих затрат", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Регламентные производственные операции", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Инвентаризация незавершенного производства", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Инвентаризация брака в производстве", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Списание незавершенного производства", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Корректировка незавершенного производства", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Оприходование незавершенного производства", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Оприходование материалов из производства", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Распредение материалов на выпуск", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Распредение прочих затрат", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Услуги собственным подразделениям", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Установка долей распределения долей по проектам", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Установка базы распределения затрат", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Сертификация номенклатуры", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Документы по сертификации номенклатуры", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Заявка на сертификацию", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Акт отбора проб номенклатуры", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Сертификация номерклатуры", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Управление производством", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("План производства", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("План произвосдтва по сменам", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Задание на производство", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Помощник планирования", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Оперативный учет производства</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>@Html.ActionLink("Планировавние", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Журнал заказа на производство", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Заказ на производство", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Корректировка заказа на производство", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Закрытие заказов на производство", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Учет производственных операций", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Отчет производства за смену", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Выпуск продукции", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Комплектация номенклатуры", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Акт об оказании производственных услуг", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Получение услуг по переработке", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Реализация услуг по переработке", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Передача товаров", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Поступление товаров из переработке", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Возврат переданных товаров", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Регламентные производственные опреации", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Установка порядка закрытия подразделений", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Расчет себестоимости", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Управление денежными средствами", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Банковские расчетные документы", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Выписка банка", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Платежное поручение входящее", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Платежное поручение исходящее", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("Аккредитив полученный", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Аккредетив переданный", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Реестр счетов", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        @*<li>@Html.ActionLink("инкассовое поручение переданное", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("инкассовое поручение полученное", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>*@
+                                        <li>@Html.ActionLink("Платежное поручение выставленное", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Платежное поручение полученное", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Платежный ордер на поступление денежных средств", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Платежный ордер на списание денежных средств", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Кассовые документы", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Расходный кассовый ордер", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Приходный кассовый ордер", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Внутреннее перемещение наличных денежных средств", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Поступление денежных документов", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Выдача денежных документов", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Объявление на взнос наличными", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Денежный чек", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Чек ККМ", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Оплата от покупателя платежной картой", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("План движения денежных средств", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Заявка на расходование средств", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Закрытие заявки на расходование средств", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Планируемое поступление денежных средств", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Закрытие планируемых поступлений денежных средств", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @*<li class="dropdown-submenu">
+                                        @Html.ActionLink("Управление производством", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                        <ul class="dropdown-menu">
+                                            <li>@Html.ActionLink("План производства", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("План произвосдтва по сменам", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Задание на производство", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Помощник планирования", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li class="dropdown-submenu">
+                                                <a class="dropdown-item dropdown-toggle" href="#">Оперативный учет производства</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>@Html.ActionLink("Планировавние", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Журнал заказа на производство", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Заказ на производство", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Корректировка заказа на производство", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Закрытие заказов на производство", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Учет производственных операций", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Отчет производства за смену", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Выпуск продукции", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Комплектация номенклатуры", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Акт об оказании производственных услуг", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Получение услуг по переработке", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Реализация услуг по переработке", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Передача товаров", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Поступление товаров из переработке", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Возврат переданных товаров", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Регламентные производственные опреации", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Установка порядка закрытия подразделений", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li>@Html.ActionLink("Расчет себестоимости", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                            <li class="dropdown-submenu">
+                                                <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>*@
+
+
+
+
+                                <li>@Html.ActionLink("Управление денежными средствами (не сделано)", "CashManagement", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Бюджетирование (не сделано)", "Budgeting", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ценообразование(не сделано) ", "Pricing", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Управление отношениями с клиентами(не сделано) ", "CustomerRelationshipManagement", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Управление персоналом", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Расчеты с персоналом (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Учет кадров организации (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Расчет зарплаты по организациям (не сделано)", "Payroll", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Бухгалтерский и налоговый учет (не сделано)", "TaxAaccounting", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ведение книги покупок (не сделано)", "PurchaseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ведение книги продаж (не сделано)", "SaleList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Спецодежда и спецоснастка (не сделано)", "Equipment", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Основные средства (не сделано)", "FixedAssetList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Нематериальные активы (не сделано)", "IntangibleAssetList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Дополнительно (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Обмен данными по схеме Поставщик-Покупатель (не сделано)", "SaleList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ручной ввод документов (не сделано)", "MovingAssetDocumentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Отчеты</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("Продажи (не сделано)", "SaleList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Закупки (не сделано)", "PurchaseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Производство (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Расширенная аналитика учета (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Затраты (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Запасы (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Денежные средства (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Бюджетирование (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ценообразование (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Управление отношениями с клиентами (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Управление персоналом", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Расчет зарплаты (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Бухгалтерский и налоговый учет (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("НДС (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Спецодежда и спецоснастка (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Основные средства (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Регистры налогового учета (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Справки-расчеты (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Рапорт руководителю (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Монитор эффективности (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Универсальные (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Настройка отчетов (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Справочники</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("Контрагенты", "PartnerList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Предприятие", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Подразделения", "DepartmentList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Склады (места хранения) (част. сделано)", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Содержимое складов", "WarehouseStatus", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Статьи затрат (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Виды взаиморасчетов (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Планирование и бюджетирование (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Способы разделения затрат на выпуск (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Основное сырье (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Должности", "StaffingUnitList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Список работников", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Производственный календарь (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Проекты (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Виды распределения по проектам (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Ключевые ресурсы предприятия (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Рабочий план счетов", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>@Html.ActionLink("Организации", "OrganisationList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li class="dropdown-submenu">
+                                    @Html.ActionLink("Номенклатура", "GetOpers", "Factory", new { }, new { @class = "dropdown-item dropdown-toggle" })
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Номенклатура", "MaterialList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Номенклатурные группы", "WarehouseList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Статьи затрат (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Виды взаиморасчетов (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Планирование и бюджетирование (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Способы разделения затрат на выпуск (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Основное сырье (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Должности(не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Список работников (частично сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Производственный календарь (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Проекты (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Виды распределения по проектам (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Ключевые ресурсы предприятия (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li>@Html.ActionLink("Рабочий план счетов", "PlanAccountList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Subsubmenu action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>@Html.ActionLink("Управление производством (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Управление персоналом (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Планирование и бюджетирование (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Денежные средства (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Расчет зарплаты (не сделано)", "ListEmployees", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Отношения с контрагентами (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Бухгалтерский и налоговый учет (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Электронная почта (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Внеоборотные активы (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Обслуживание ОС (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Классификаторы (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Функции учета затрат (не сделано)", "GetOpers", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Настройки</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("Учетная политика", "ListCurriencies", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Реквизиты организации", "ListPartners", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Настройка проводок</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("План счетов", "PlanAccountTypeList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Справочник субконто", "SubcontoTypeList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Группы статей затрат", "CostGroupList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Статьи затрат", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Основные средства", "ListFixedAssetList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Контрагенты", "PartnerList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Нематериальные активы", "ListIntangibleAssets", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Расходы на НИОКР", "RDList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Виды активов и обязательств", "AssetsLiabilitiesTypesList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Договоры", "ContractList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Номенклатурные группы", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Счета-фактуры полученные", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Ставки НДС", "VATRates", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("(об) Статьи движения денежных средств", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Денежные документы", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Виды платежей в бюджет (фонды)", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Уровни бюджетов", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Счета-фактуры выданные", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Направления использования прибыли", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("(об) Номенклатурные группы", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("(об) Прочие доходы и расходы", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Резервы", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Бланки строгой отчетности", "CostItemList", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Документы</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("Приходные-расходные документы", "Orders", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li class="dropdown-divider" />
+                                <li>@Html.ActionLink("Список товарных накладных", "OrderTransferDocs", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Список счет-фактур", "OrderInvoices", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("Список актов", "OrderActs", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>
+
+                        @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Счета</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>@Html.ActionLink("Все счета", "Orders", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li class="dropdown-divider" />
+                                <li>@Html.ActionLink("Все товарные накладные", "OrderInvoices", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                                <li class="dropdown-divider" />
+                                <li>@Html.ActionLink("Все счета-фактуры", "OrderTransferDocs", "Factory", new { }, new { @class = "dropdown-item" })</li>
+                            </ul>
+                        </li>*@
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="my-fluid-container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - мое приложение ASP.NET</p>
+        </footer>
+    </div>
+    <script>
+        $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
+            if (!$(this).next().hasClass('show')) {
+                $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+            }
+            var $subMenu = $(this).next(".dropdown-menu");
+            $subMenu.toggleClass('show');
+
+
+            $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
+                $('.dropdown-submenu .show').removeClass("show");
+            });
+            return false;
+        });
+
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+
+
+</body>
+</html>

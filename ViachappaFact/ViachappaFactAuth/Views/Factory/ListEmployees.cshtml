@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.Employee>
+
+@{
+    ViewBag.Title = "Управление персоналом";
+}
+
+    <h2>Управление персоналом</h2>
+
+<p>
+    @Html.ActionLink("Добавить нового сотрудника", "EmployeeCreate", new { }, new { @class="btn btn-lg btn-dark"})
+</p>
+<table class="table">
+    <tr>
+        <th>Таб. номер</th>
+        <th>Имя сотрудника</th>
+        <th>Дата рождения</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>@item.Id</td>
+    <td>@item.LastName @item.FirstName  @item.SecondName</td>
+    <td>@item.Birthday.ToShortDateString()</td>
+    <td>
+        @Html.ActionLink("Удалить", "EmployeeDelete", new { id = item.Id })
+    </td>
+</tr>
+}
+</table>

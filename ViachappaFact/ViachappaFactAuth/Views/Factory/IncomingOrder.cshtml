@@ -1,0 +1,319 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    ViewBag.Title = "IncomingOrder";
+}
+<div>
+    <h2 style="display:inline-block">Счет № @Model.DocNumber от @Model.DocDate.ToLongDateString() (@Model.OrderType.Name)</h2>
+    @Html.ActionLink("Провести документ", "OrderPost", new { id = Model.Id }, new { @class = "btn btn-danger", style = "display:inline-block" })
+</div>
+
+@{
+    double total = 0;
+    double nds = 0;
+    double total_nds = 0;
+
+}
+<hr />
+<table>
+    <tr>
+        <td width="50%" rowspan="3" style="border-right:1px solid black;width:89%">
+            <div>
+                @if (ViewBag.Edit && !Model.OrderTransferDoc_Id.HasValue)
+                {
+                    <form method="post" action="@Url.Action("IncomingOrder", "Factory", new {id = Model.Id })">
+                        @Html.HiddenFor(x => x.Id)
+                        @if (Model.OrderType_Id > 1)
+                        {
+                            @Html.HiddenFor(x => x.DocDate)
+                            @Html.HiddenFor(x => x.DocNumber)
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                <label for="DocDate">Номер документа</label>
+                                <input name="DocNumber" id="DocNumber" type="number" value="@Model.DocNumber" required class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="DocDate">Дата документа</label>
+                                <input name="DocDate" id="DocDate" type="date" value="@Model.DocDate" required class="form-control" />
+                            </div>
+                        }
+                        <br />
+                        @Html.HiddenFor(x => x.OperDate)
+                        <label for="Organisation_Id">Организация</label>
+                        @Html.DropDownListFor(x => x.Organisation_Id, new SelectList(new Dictionary<int, string>(), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                        <label for="Partner_Id">Контрагент</label>
+                        @Html.DropDownListFor(x => x.Partner_Id, new SelectList(new Dictionary<int, string>(), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                        <label for="Contract_Id">Договор</label>
+                        @Html.DropDownListFor(x => x.Contract_Id, new SelectList(new Dictionary<int, string>(), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+                        <br /><hr />
+                        <input type="submit" value="Сохранить" class="btn btn-dark" />
+                    </form>
+                    @Html.ActionLink("Отменить изменения", "IncomingOrder", "Factory", new { }, new { id = Model.Id })
+                }
+                else
+                {
+                    <dl class="dl-horizontal">
+                        <dt>Контрагент</dt>
+                        <dd> @Model.Partner.Name</dd>
+                        <dt>Организация</dt>
+                        <dd>
+                            @Model.Organisation.FullName
+                        </dd>
+                        <dt>Договор</dt>
+                        <dd> @Model.Contract.ContractNumber @Model.Contract.Abstract от @Model.Contract.ContractDate</dd>
+                    </dl>
+                    if (!Model.OrderTransferDoc_Id.HasValue)
+                    {
+                        @Html.ActionLink("Редактировать шапку документа", "IncomingOrder", "Factory", new { id = Model.Id, edit = 1 }, new { @class = "btn btn-dark" })
+                    }
+
+                    <br />
+                    if (Model.OrderType_Id == 2)
+                    {
+                        @Html.ActionLink("Сформировать ТОРГ-12", "TORG12", "PDF", new { id = Model.Id }, new { @class = "btn btn-dark" })
+                        @Html.ActionLink("Сформировать счет на оплату", "OplataCount", "PDF", new { id = Model.Id }, new { @class = "btn btn-dark" })
+                    }
+
+                }
+            </div>
+            @if (Model.OrderTransferDoc_Id.HasValue)
+            {
+                <a href="@Url.Action("DownloadOrderInvoice", "Factory")">Скачать счет-фактуру</a>
+            }
+
+
+            <hr />
+            <h4>Список позиций</h4>
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>Артикул</th>
+                    <th>Продукт</th>
+                    <th>Колво</th>
+                    <th>Цена</th>
+                    <th>Цена с НДС</th>
+                    <th>Счета</th>
+                    <th>Сумма</th>
+                    <th>Ставка НДС</th>
+                    <th>НДС</th>
+                    <th>Сумма с НДС</th>
+                    @if (!Model.OrderTransferDoc_Id.HasValue)
+                    {
+                        <th></th>
+                    }
+                </tr>
+                @foreach (var t in Model.OrderPositions)
+                {
+                    {
+                        total_nds = total_nds + (((double)t.Count * (double)t.Price * t.VATRate.Price) + (double)t.Count * (double)t.Price);
+                        total = total + (double)t.Count * (double)t.Price;
+                        nds = nds + (double)t.Count * (double)t.Price * t.VATRate.Price;
+
+                    }
+                    <tr>
+                        <td>@t.Material.Articul</td>
+                        <td>@t.Material.Name</td>
+                        <td>@t.Count</td>
+                        <td>@t.Price.ToString("C2")</td>
+                        <td>@((t.Price*((decimal)t.VATRate.Price+1)).ToString("C2"))</td>
+                        <td>@t.PlanAccountType.Number <br />  @t.PlanAccountType1.Number</td>
+                        <td>@((t.Count * (double)t.Price).ToString("C2"))</td>
+                        <td>@t.VATRate.Name</td>
+                        <td>@(((double)t.Count * (double)t.Price * t.VATRate.Price).ToString("C2"))</td>
+                        <td>@(((((double)t.Count * (double)t.Price * t.VATRate.Price) + (double)t.Count * (double)t.Price)).ToString("C2"))</td>
+                        @if (!Model.OrderTransferDoc_Id.HasValue)
+                        {
+                            <td>
+                                @Html.ActionLink("удалить", "DeleteIncomingOrderPosition", new { id = t.Id })
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+
+            <h5>Итого: Сумма без НДС - @total.ToString("C2"), НДС - @nds.ToString("C2"), Cумма с НДС - @total_nds.ToString("C2")</h5>
+            <hr />
+
+            @if (!Model.OrderTransferDoc_Id.HasValue)
+            {
+                <a href="@Url.Action("MaterialCreate","Factory")" class="btn btn-success" target="_blank">добавить новую номенклатурную единицу</a>
+                Html.RenderPartial("IncomingOrderPositionCreate", new ViachappaFactAuth.DB.OrderPosition { Order_Id = Model.Id });
+            }
+
+            @if (!Model.OrderTransferDoc_Id.HasValue && new int[] { 1, 3 }.Contains(Model.OrderType_Id))
+            {
+                <hr />
+                <h5>Регистрация Торг-12<br />после добавления редактировать документ будет нельзя!</h5>
+                <form enctype="multipart/form-data" method="post" action="@Url.Action("OrderTransferDocForOrderCreate","Factory")">
+                    <label for="docnumber">Номер Торг-12</label>
+                    <input type="text" required name="docnumber" id="docnumber" class="form-control" />
+                    <label for="docdate">Дата счет-фактуры</label>
+                    <input type="date" required name="docdate" id="docdate" class="form-control" />
+                    <label for="filename">Скан счет-фактуры</label>
+                    <input type="file" required name="filename" id="filename" class="form-control form-control-file" />
+                    @Html.HiddenFor(x => x.Id)
+                    <br />
+                    <input type="submit" value="Зарегистрировать Торг-12" class="btn btn-danger" />
+                </form>
+                <hr />
+            }
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "IncomingOrders")
+            </p>
+
+        </td>
+        @if (Model.Contract.UseUpd)
+        {
+            <td style="height:40%">
+                <h1>УПД</h1>
+
+            </td>
+        }
+        else
+        {
+            <td style="min-height:40%">
+                <h1>Торг-12</h1>
+                @if (!Model.OrderTransferDoc_Id.HasValue)
+                {
+                    <form style="margin:10px" method="post" action="@Url.Action("OrderTransferDocCreate","Factory",new {id = Model.Id })" enctype="multipart/form-data">
+                        <label for="DocNumber">Номер документа</label>
+                        <input name="DocNumber" id="DocNumber" type="number" class="form-control" required />
+                        <label for="DocDate">Дата документа</label>
+                        <input name="DocDate" id="DocDate" type="date" class="form-control" required />
+                        <label for="File">Скан документа</label>
+                        <input name="File" id="File" type="file" class="form-control" />
+                        <label for="Warehouse_Id">Склад для отгружаемой продукции</label>
+                        <select class="form-control" id="Warehouse_Id" name="Warehouse_Id">
+                            @foreach (var t in ViewBag.Warehouses as Dictionary<int, string>)
+                            {
+                                <option value="@t.Key">@t.Value</option>
+                            }
+                        </select>
+                        <br />
+                        <input type="submit" value="Сохранить" class="btn btn-dark" />
+                    </form>
+                }
+                else
+                {
+                    <h3>Номер накладной: @Model.OrderTransferDoc.DocNumber</h3>
+                    <h3>Дата накладной: @Model.OrderTransferDoc.DocDate.ToShortDateString()</h3>
+                    <br />
+                    if (@Model.OrderTransferDoc.FileName.Length > 3)
+                    {
+                        @Html.ActionLink("Скачать скан документа", "DownloadOrderTransferDocFile", new { id = Model.OrderTransferDoc_Id }, new { @class = "btn btn-dark" })
+                        <br />
+                    }
+
+                    if (!Model.OrderTransferDoc.isPost)
+                    {
+                        <br />
+                        @Html.ActionLink("Провести", "OrderTransferDocPost", new { id = Model.OrderTransferDoc_Id }, new { @class = "btn btn-dark" })
+                        @Html.ActionLink("Удалить", "", new { }, new { @class = "btn btn-danger" })
+                    }
+                    else
+                    {
+                        <br />
+                        @Html.ActionLink("Распровести", "", new { }, new { @class = "btn btn-danger" })
+                    }
+                }
+
+            </td>
+
+        }
+
+    </tr>
+    @if (!Model.Contract.UseUpd)
+    {
+        <tr>
+            <td style="border-top:1px solid black">
+                <h1>Счета-фактуры</h1>
+            </td>
+        </tr>
+    }
+    @if (Model.OrderPositions.Where(x => x.Material.MaterialType_Id == 3).Count() > 0)
+    {
+        <tr>
+            <td style="border-top:1px solid black">
+                <h1>Акты</h1>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#Organisation_Id').select2({
+            ajax: {
+
+                url: '/dropdownlist/organisations',
+                type: "post",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        key: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            },
+        });
+        $('#Partner_Id').select2({
+            ajax: {
+
+                url: '/dropdownlist/Partners',
+                type: "post",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        key: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            },
+        });
+        $('#Partner_Id').on('change', function () {
+            var url = "/dropdownlist/ContractsForPartner/" + $('#Partner_Id').val();
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                async: false,
+                success: function (data) {
+
+                    $('#Contract_Id').replaceWith(data);
+                }
+            });
+        });
+    });
+</script>
+@if (Model.OrderType_Id == 4)
+{
+    <script>
+        $('#Material_Id').on('change', function () {
+            var url = "/dropdownlist/GetMaterialRest/" + $('#Material_Id').val();
+            $.ajax({
+                url: url,
+                method: "GET",
+                async: false,
+                success: function (data) {
+                    var count = data;
+                    $("#Count").attr({
+                        "max": count, "value": count
+                    });
+                }
+            });
+        });
+    </script>
+}

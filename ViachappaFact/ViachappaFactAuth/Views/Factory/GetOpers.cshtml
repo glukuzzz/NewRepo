@@ -1,0 +1,23 @@
+﻿@model List<(int, string, int, string)>
+@{
+    ViewBag.Title = "GetOpers";
+}
+
+<h2>GetOpers</h2>
+
+<table class="table table-hover">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.Item1</td>
+                <td>@t.Item2</td>
+                <td>@t.Item3</td>
+                <td>@t.Item4</td>
+            </tr>
+        }
+    </tbody>
+</table>

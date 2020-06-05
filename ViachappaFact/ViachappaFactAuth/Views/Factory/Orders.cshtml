@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.Order>
+
+@{
+    ViewBag.Title = "IncomingOrders";
+}
+
+<h2>Список счетов</h2>
+<form>
+    <input type="date" />
+    <input type="date" />
+    <input type="submit" value="определить диапазон дат выборки" />
+</form>
+<br />
+<br />
+<p>
+    @Html.ActionLink("Создать", "IncomingOrdersCreate")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Номер документа</th>
+            <th>Дата документа</th>
+            <th>Контрагент</th>
+            <th>Организация</th>
+            <th>Договор</th>
+            <th>Тип документа</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.DocNumber
+                </td>
+                <td>
+                    @item.DocDate.ToShortDateString()
+                </td>
+                <td>
+                    @item.Partner.Name
+                </td>
+                <td>
+                    @item.Organisation.ShortName
+                </td>
+                <td>
+                    @item.Contract.ContractNumber
+                </td>
+                <td>@item.OrderType.Name</td>
+                <td>
+                    @Html.ActionLink("Просмотреть", "IncomingOrder", new { id = item.Id })
+                    @Html.ActionLink("Удалить", "OrderDelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

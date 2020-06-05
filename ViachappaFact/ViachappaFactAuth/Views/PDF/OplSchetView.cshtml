@@ -1,0 +1,40 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OplSchetView</title>
+</head>
+<body>
+    <div>
+        <table width="730">
+            <tr>
+                <td style="font:10px; text-align:center">
+                    Внимание! Оплата данного счета означает согласие с условиями поставки товара. Уведомление об оплате<br />
+                    обязательно, в противном случае не гарантируется наличие товара на складе. Товар отпускается по факту<br />
+                    прихода денег на р/с Поставщика, самовывозом, при наличии доверенности и паспорта.
+                </td>
+            </tr>
+        </table>
+        <table width="730">
+        </table>
+        <h3>Счет на оплату № @Model.DocNumber от @Model.DocDate.ToLongDateString()</h3>
+
+        <table width="730">
+        </table>
+
+        <table width="730">
+        </table>
+
+        <table width="730">
+        </table>
+        <hr  style="height:2px; background-color:black" />
+    </div>
+</body>
+</html>

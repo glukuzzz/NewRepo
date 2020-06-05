@@ -1,0 +1,194 @@
+﻿@model ViachappaFactAuth.DB.Partner
+
+@{
+    ViewBag.Title = "Контрагент";
+}
+
+<h2>Контрагент</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+
+<div class="form-horizontal">
+    <h4></h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="INN">ИНН</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.INN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.INN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div id="from-container"></div>
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Name">Наименование</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2" for="KPP">КПП</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.KPP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.KPP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if (ViewBag.Edit)
+    {
+        <hr />
+        <h4>Список счетов контрагента</h4>
+        @Html.ActionLink("Добавить новый счет", "PartnerBankAccountCreate", new { id = Model.Id }, new { @class = "btn btn-dark" })
+        <table class="table table-bordered">
+            <tbody>
+                @foreach (var acc in ViewBag.BankAccounts as List<(Guid, string, string, string)>)
+                {
+                    <tr><td>@acc.Item2</td><td>@acc.Item3</td><td>@acc.Item4</td><td>@Html.ActionLink("изменить", "PartnerBankAccountCreate", new { id = Model.Id, acc_id = acc.Item1 })</td></tr>
+                }
+            </tbody>
+        </table>
+        <hr />
+    }
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="OGRN">ОГРН</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OGRN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OGRN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="OKPO">ОКПО</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OKPO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OKPO, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="OKATO">ОКАТО</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.OKATO, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OKATO, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="LegalAddress">Юридический адрес</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LegalAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LegalAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="ActualAddress">Фактический адрес</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ActualAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ActualAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Director">Директор</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Director, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="AccountantGeneral">Главный бухгалтер</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AccountantGeneral, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AccountantGeneral, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="PhoneNumber">Телефон</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Fax">Факс</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Email">Email</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="ShortName">Краткое наименование</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ShortName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ShortName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Сохранить" class="btn btn-dark" />
+        </div>
+    </div>
+</div>
+}
+<div>
+    @Html.ActionLink("Назад к списку контрагентов", "PartnerList")
+</div>
+<script>
+    $(document).ready(function () {
+        $('#INN').blur(function () {
+
+            var jsondata = "";
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: "/Factory/PartnerInfo/" + $('#INN').val(),
+                success: function (data) {
+                    jsondata = data;
+                }
+            });
+           
+
+            var t = $.parseJSON(jsondata);
+            $('#KPP').val(t.kpp);
+            $('#Name').val(t.name);
+            $('#ShortName').val(t.shortName);
+            $('#OGRN').val(t.ogrn);
+            $('#OKPO').val(t.okpo);
+            $('#Director').val(t.director);
+            $('#AccountantGeneral').val(t.director);
+            $('#LegalAddress').val(t.fact_adr);
+            /*
+             kpp = b.kpp,
+                name = b.name.full_with_opf,
+                shortName = b.name.short_with_opf,
+                ogrn = b.ogrn,
+                okpo = b.okpo,
+                director = b.management.name,
+                fact_adr = b.address.value
+             */
+        });
+    });
+</script>

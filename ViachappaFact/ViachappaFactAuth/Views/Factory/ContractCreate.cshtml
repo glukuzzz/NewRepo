@@ -1,0 +1,51 @@
+﻿@model ViachappaFactAuth.DB.Contract
+
+@{
+    ViewBag.Title = "ContractCreate";
+}
+
+<h2>Договор</h2>
+
+<form method="post" action="@Url.Action("ContractCreate", "Factory", new {  })" enctype="multipart/form-data">
+    <label for="Partner_id">Контрагент</label>
+    <select name="Partner_id" id="Partner_Id" class="form-control" required></select>
+    <hr />
+    <label for="ContractNumber">Номер документа (текст)</label>
+    <input class="form-control" type="text" name="ContractNumber" id="ContractNumber" required />
+    <label for="ContractDate">Дата документа</label>
+    <input class="form-control col-2" type="date" name="ContractDate" id="ContractDate" required />
+    <br />
+    @Html.EditorFor(x => x.UseUpd)
+    <label for="UseUpd">Использовать УПД</label>
+    <hr />
+    <label for="DateStart">Дата начала</label>
+    <input class="form-control col-2" type="date" name="DateStart" id="DateStart" required />
+    <label for="Abstract">Описание</label>
+    <textarea class="form-control" type="text" name="Abstract" id="Abstract" style="min-width:100%" rows="3" required></textarea>
+    <label for="File">Скан документа</label>
+    <input class="form-control" type="file" name="File" id="File" />
+    <br /><br />
+    <input class="btn btn-success btn-lg" type="submit" value="Сохранить" />
+</form>
+<div>@Html.ActionLink("Назад", "Index")</div>
+<script>
+    $('#Partner_Id').select2({
+        ajax: {
+
+            url: '/dropdownlist/Partners',
+            type: "post",
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    key: params.term
+                };
+            },
+            processResults: function (response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        },
+    });
+</script>

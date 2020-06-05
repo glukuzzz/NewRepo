@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.PlanAccountType>
+
+@{
+    ViewBag.Title = "PlanAccountTypeList";
+}
+
+<h2>Планы счетов</h2>
+
+<p>
+    @Html.ActionLink("Добавить", "PlanAccountTypeCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>Код</th>
+        <th>Наименование</th>
+        <th>Субконто</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.OrderBy(x => x.SubcontoTypes.Count).ThenBy(x => x.Id))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td width="500">
+                @foreach (var t in item.SubcontoTypes.OrderBy(x => x.Code))
+                {
+                    @(t.Code + " " + t.Name) <br />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "PlanAccountTypeCreate", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,126 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    ViewBag.Title = "OutgoingOrdersCreate";
+}
+
+<h2>Счета (cоздание/изменение) </h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.DocNumber)
+    <h4> Счет № @Model.DocNumber</h4>
+
+    @*<div class="form-group">
+            <label class="control-label col-md-2" for="DocNumber">Номер документа</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DocNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DocNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="DocDate">Дата документа</label>
+        <div class="col-md-10">
+            <input type="date" required name="DocDate" id="DocDate" value="@Model.DocDate.ToString("yyyy-MM-dd")" class="form-control" />
+            @Html.ValidationMessageFor(model => model.DocDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.HiddenFor(x => x.OperDate)
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Organisation_Id">Организация</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Organisation_Id, new SelectList(new Dictionary<int, string> { }, "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Organisation_Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Partner_Id">Контагент</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Partner_Id, new SelectList(new Dictionary<string, string>(), "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Partner_Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Contract_Id">Договор</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Contract_Id, new SelectList(new Dictionary<string, string> { }, "Key", "Value"), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Contract_Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+<div>
+    @Html.ActionLink("Назад", "OutgoingOrders")
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#Partner_Id').select2({
+            ajax: {
+
+                url: '/dropdownlist/Partners',
+                type: "post",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        key: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            },
+        });
+        $('#Partner_Id').on('change', function () {
+            var url = "/dropdownlist/ContractsForPartner/"+$('#Partner_Id').val();
+            $.ajax({
+                url: url,
+                method: "GET",
+                async: false,
+                success: function (data) {
+                    $('#Contract_Id').replaceWith(data);
+                }
+            });
+        });
+        $('#Organisation_Id').select2({
+            ajax: {
+
+                url: '/dropdownlist/Organisations',
+                type: "post",
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        key: params.term
+                    };
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            },
+        });
+    });
+</script>

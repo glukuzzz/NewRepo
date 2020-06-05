@@ -1,0 +1,237 @@
+﻿@model ViachappaFactAuth.DB.Order
+
+@{
+    Layout = null;
+    var i = 1;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UPDView</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body style="position:absolute; top:0">
+    <div>
+        <table width="103%">
+            <tr>
+                <td colspan="2" style="        border: none;
+        border-right: 2px solid;
+        text-align: left;
+        vertical-align: middle;
+        font: 11px">
+                    <table>
+                        <tr><td>Универсальный<br />передаточный<br />документ</td></tr>
+                        <tr><td>Статус: <p style="border:1px solid;display:inline-block;width:20px;height:15px;margin-left:5px;padding:3px">1</p></td></tr>
+                        <tr><td>1 - счет-фактура и<br />передаточный<br />документ (акт)<br />2 - передаточный<br />документ (акт)</td></tr>
+                    </table>
+                </td>
+                <td colspan="14" style="vertical-align:top">
+                    <table width="100%" style="font:8px">
+                        <tr><td width="10%">Счет-фактура N</td><td style="border-bottom:1px solid; width:10%"></td><td style="text-align:center; width:3%">от</td><td style="border-bottom:1px solid; width:10%"></td><td>(1)</td><td style="font:6px;text-align:right">Приложение N 1 к постановлению Правительства Российской Федерации от 26 декабря 2011 года № 1137</td></tr>
+                        <tr><td>Исправление N</td><td style="border-bottom:1px solid; width:10%"></td><td style="text-align:center; width:3%">от</td><td style="border-bottom:1px solid; width:10%"></td><td>(1а)</td><td style="font:6px;text-align:right">(в редакции постановления Правительства Российской Федерации от 19.08.2017 № 981)</td></tr>
+                    </table>
+                    <table width="100%" style="font:10px">
+                        <tr><td style="font-weight:bold">Продавец</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(2)</td></tr>
+                        <tr><td>Адрес</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(2а)</td></tr>
+                        <tr><td>ИНН/КПП продавца</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(2б)</td></tr>
+                        <tr><td>Грузоотправитель и его адрес</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(3)</td></tr>
+                        <tr><td>Грузополучатель и его адрес</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(4)</td></tr>
+                        <tr><td>К платежно-расчетному документу</td><td>N</td><td style="border-bottom:1px solid;"></td><td>от</td><td style="border-bottom:1px solid;"></td><td>(5)</td></tr>
+                        <tr><td style="font-weight:bold">Покупатель</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(6)</td></tr>
+                        <tr><td>Адрес</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(6а)</td></tr>
+                        <tr><td>ИНН/КПП покупателя</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(6б)</td></tr>
+                        <tr><td>Валюта: наименование, код</td><td colspan="4" style="border-bottom:1px solid;"></td><td>(7)</td></tr>
+                        <tr><td colspan="4">Идентификатор государственного контракта, договора (соглашения)</td><td style="border-bottom:1px solid;min-width:500px"></td><td>(8)</td></tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="text-align:center;vertical-align:middle; font:9px">
+                <td rowspan="2" style="border:1px solid">N<br />п/п</td>
+                <td rowspan="2" style="border:1px solid;border-right:2px solid">Код товара/<br />работ, услуг</td>
+                <td rowspan="2" style="border:1px solid">Наименование товара (описание<br />выполненных работ, оказанных<br />услуг), имущественного права</td>
+                <td rowspan="2" style="border:1px solid">Код<br />вида<br />товара</td>
+                <td colspan="2" style="border:1px solid">Единица измерения</td>
+                <td rowspan="2" style="border:1px solid">Коли-<br />чество<br />(объем)</td>
+                <td rowspan="2" style="border: 1px solid">Цена (тариф)<br />за единицу<br />измерения</td>
+                <td rowspan="2" style="border:1px solid">Стоимость товаров<br />(работ, услуг),<br />имущественных<br />прав без налога -<br />всего</td>
+                <td rowspan="2" style="border:1px solid">В том<br />числе<br />сумма<br />акциза</td>
+                <td rowspan="2" style="border:1px solid">Нало-<br />говая<br />ставка</td>
+                <td rowspan="2" style="border:1px solid">Сумма налога,<br />предъявляемая<br />покупателю</td>
+                <td rowspan="2" style="border:1px solid">Стоимость товаров<br />(работ, услуг),<br />имущественных<br />прав с налогом -<br />всего</td>
+                <td colspan="2" style="border:1px solid">Страна происхождения<br />товара</td>
+                <td rowspan="2" style="border:1px solid">Регистра-<br />ционный номер<br />таможенной<br />декларации</td>
+            </tr>
+            <tr style="text-align:center;vertical-align:middle; font:9px">
+                <td style="border:1px solid">код</td>
+                <td style="border:1px solid">условное<br />обозначение<br />(национальное)</td>
+                <td style="border:1px solid">Цифро-<br />вой код</td>
+                <td style="border:1px solid">Краткое<br />наименование</td>
+            </tr>
+            <tr style="text-align:center;vertical-align:middle; font:9px">
+                <td style="border:1px solid">А</td>
+                <td style="border:1px solid;border-right:2px solid;width:60px">Б</td>
+                <td style="border:1px solid">1</td>
+                <td style="border:1px solid">1а</td>
+                <td style="border:1px solid">2</td>
+                <td style="border:1px solid">2а</td>
+                <td style="border:1px solid">3</td>
+                <td style="border:1px solid">4</td>
+                <td style="border:1px solid">5</td>
+                <td style="border:1px solid">6</td>
+                <td style="border:1px solid">7</td>
+                <td style="border:1px solid">8</td>
+                <td style="border:1px solid">9</td>
+                <td style="border:1px solid">10</td>
+                <td style="border:1px solid">10а</td>
+                <td style="border:1px solid">11</td>
+            </tr>
+            @foreach (var p in Model.OrderPositions.Take(4))
+            {
+                <tr style="text-align:center;vertical-align:middle; font:9px">
+                    <td style="border:1px solid">@i</td>
+                    <td style="border:1px solid;border-right:2px solid">@p.Material.Articul</td>
+                    <td style="border:1px solid">@p.Material.Name</td>
+                    <td style="border:1px solid"></td>
+                    <td style="border:1px solid"></td>
+                    <td style="border:1px solid"></td>
+                    <td style="border:1px solid">@p.Material.UnitName</td>
+                    <td style="border:1px solid">@p.Price.ToString("C2")</td>
+                    <td style="border:1px solid">@((p.Price * p.Count).ToString("C2"))</td>
+                    <td style="border:1px solid">6</td>
+                    <td style="border:1px solid">7</td>
+                    <td style="border:1px solid">8</td>
+                    <td style="border:1px solid">9</td>
+                    <td style="border:1px solid">10</td>
+                    <td style="border:1px solid">10а</td>
+                    <td style="border:1px solid">11</td>
+                </tr>
+                {
+                    i = i + 1;
+                }
+            }
+            <tr style="text-align:center;vertical-align:middle; font:9px">
+                <td style="border:1px solid"></td>
+                <td style="border:1px solid;border-right:2px solid;"></td>
+                <td colspan="6" style="border:1px solid;text-align:left;font:10px bold">Всего к оплате</td>
+                <td style="border:1px solid">5</td>
+                <td style="border:1px solid">6</td>
+                <td style="border:1px solid">7</td>
+                <td style="border:1px solid">8</td>
+                <td style="border:1px solid">9</td>
+                <td style="border:1px solid">10</td>
+                <td style="border:1px solid">10а</td>
+                <td style="border:1px solid">11</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border:none; border-right:2px solid;text-align:left;vertical-align:middle; font:11px">Документ<br />составлен на<br />_______ листах</td>
+                <td colspan="14" style="border:none; border-bottom:2px solid">
+                    <table width="100%">
+                        <tr>
+                            <td width="450px">
+                                <table style="font:9px" width="100%">
+                                    <tr><td style="padding-right:20px">Руководитель организации<br />или иное уполномоченное лицо</td><td></td><td></td><td></td></tr>
+                                    <tr><td></td><td style="border-top:1px solid; width:20%;text-align:center;">(подпись)</td><td style="padding-right:20px"></td><td style="border-top:1px solid; width:35%;text-align:center;">(ф.и.о)</td></tr>
+                                    <tr><td style="padding-right:20px; width:50%">Индивидуальный предприниматель</td><td></td><td></td><td></td></tr>
+                                    <tr><td style="padding-right:20px">или иное уполномоченное лицо</td><td style="border-top:1px solid; width:20%;text-align:center;">(подпись)</td><td style="padding-right:20px"></td><td style="border-top:1px solid; width:35%;text-align:center;">(ф.и.о)</td></tr>
+                                </table>
+                            </td>
+                            <td style="padding-left:10px">
+                                <table style="font:9px; " width="100%">
+                                    <tr><td style="padding-right:20px">Главный бухгалтер<br />или иное уполномоченное лицо</td><td></td><td></td><td></td></tr>
+                                    <tr><td></td><td style="border-top: 1px solid; width: 20%; text-align: center;">(подпись)</td><td style="padding-right:20px"></td><td style="border-top:1px solid; width:35%;text-align:center;">(ф.и.о)</td></tr>
+                                    <tr><td colspan="3" style="color:white">ccc</td></tr>
+                                    <tr><td colspan="4" style="border-top:1px solid;text-align:center;">(реквизиты свидетельства о государственной регистрации индивидуального предпринимателя)</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr><td style="font:8px">Основание передачи (сдачи) / получения (приемки)</td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td style="font:6px">(договор; доверенность и др.)</td><td></td></tr>
+            <tr><td style="font:8px">Данные о транспортировке и грузе</td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td style="font:6px">(транспортная накладная, поручение экспедитору, экспедиторская / складская расписка и др. / масса нетто/ брутто груза, если не приведены ссылки на транспортные документы, содержащие эти сведения)</td><td></td></tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="border-right:1px solid;width:550px">
+                    <table style="font:8px">
+                        <tr><td colspan="7">Товар (груз) получил / услуги, результаты работ, права принял</td></tr>
+                        <tr><td style="color:white">a</td><td></td><td></td><td></td><td></td><td>[15]</td></tr>
+                        <tr style="">
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(должность)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(подпись)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(ф.и.о.)</td>
+                            <td></td>
+                        </tr>
+                        <tr><td>Дата получения (приемки) &nbsp &nbsp "_____" &nbsp &nbsp _____________&nbsp &nbsp 20 ___ г.</td><td>[16]</td></tr>
+                        <tr><td>Иные сведения о приемке</td></tr>
+                        <tr><td></td><td>[17]</td></tr>
+                        <tr><td style="border-top:1px solid;text-align:center; font:6px">(информация о наличии/отсутствии претензии; ссылки на неотъемлемые приложения, и другие  документы и т.п.)</td><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td>Ответственный за правильность оформления факта хозяйственной жизни</td></tr>
+                        <tr><td style="color:white">a</td></tr>
+                        <tr style="">
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(должность)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(подпись)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(ф.и.о.)</td>
+                            <td></td>
+                        </tr>
+                        <tr><td>Наименование экономического субъекта - составителя документа</td></tr>
+                        <tr><td style="color:white">a</td></tr>
+                        <tr><td style="border-top:1px solid;text-align:center; font:6px">(может не заполняться при проставлении печати в М.П., может быть указан ИНН / КПП)</td><td></td></tr>
+                        <tr><td style="padding-left:20px">М.П.</td></tr>
+                    </table>
+                </td>
+                <td style="width:600px">
+                    <table style="font:8px;width:550px">
+                        <tr><td colspan="7">Товар (груз) получил / услуги, результаты работ, права принял</td></tr>
+                        <tr><td style="color:white">a</td><td></td><td></td><td></td><td></td><td>[15]</td></tr>
+                        <tr style="">
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(должность)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(подпись)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(ф.и.о.)</td>
+                            <td></td>
+                        </tr>
+                        <tr><td>Дата получения (приемки) &nbsp &nbsp "_____" &nbsp &nbsp _____________&nbsp &nbsp 20 ___ г.</td><td>[16]</td></tr>
+                        <tr><td>Иные сведения о приемке</td></tr>
+                        <tr><td></td><td>[17]</td></tr>
+                        <tr><td style="border-top:1px solid;text-align:center; font:6px">(информация о наличии/отсутствии претензии; ссылки на неотъемлемые приложения, и другие  документы и т.п.)</td><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td>Ответственный за правильность оформления факта хозяйственной жизни</td></tr>
+                        <tr><td style="color:white">a</td></tr>
+                        <tr style="">
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(должность)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(подпись)</td>
+                            <td></td>
+                            <td style="border-top:1px solid;text-align:center; font:6px;">(ф.и.о.)</td>
+                            <td></td>
+                        </tr>
+                        <tr><td>Наименование экономического субъекта - составителя документа</td></tr>
+                        <tr><td style="color:white">a</td></tr>
+                        <tr><td style="border-top:1px solid;text-align:center; font:6px">(может не заполняться при проставлении печати в М.П., может быть указан ИНН / КПП)</td><td></td></tr>
+                        <tr><td style="padding-left:20px">М.П.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

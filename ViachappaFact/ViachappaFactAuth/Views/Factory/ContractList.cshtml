@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.Contract>
+
+@{
+    ViewBag.Title = "ContractList";
+}
+<link rel="stylesheet" href="~/Content/font-awesome.min.css" />
+<h2>Список договоров</h2>
+
+<p>
+    @Html.ActionLink("Добавить новый договор", "ContractCreate",new { }, new { @class = "btn btn-dark"})
+</p>
+<table class="table">
+    <tr>
+        <th>Номер документа</th>
+        <th>Дата документа</th>
+        <th>Контрагент</th>
+        <th>УПД</th>
+        <th></th>
+        <th></th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.ContractNumber)</td>
+        <td>@item.ContractDate.ToShortDateString()</td>
+        <td>@item.Partner.Name</td>
+        <td> @if (item.UseUpd)  {<i class="fa fa-check" aria-hidden="true"></i>} </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.FileName))
+            {
+                @Html.ActionLink("Скачать", "DownloadContractDoc", new { id = item.Id }, new { @class = "btn btn-dark" })
+            }
+        </td>
+        <td>@Html.ActionLink("Детально", "Contract", new { id = item.Id }, new { @class = "btn btn-dark" }) @Html.ActionLink("Удалить", "ContractDelete", new { id = item.Id }, new { @class = "btn btn-danger" })</td>
+    </tr>
+}
+</table>

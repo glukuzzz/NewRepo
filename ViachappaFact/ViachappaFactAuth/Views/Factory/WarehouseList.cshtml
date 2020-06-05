@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ViachappaFactAuth.DB.Warehouse>
+
+@{
+    ViewBag.Title = "WarehouseList";
+}
+
+<h2>WarehouseList</h2>
+
+<p>
+    @Html.ActionLink("Создать", "WarehouseCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Наименовение</th>
+        <th>Отвественный</th>
+        <th>Подразделение</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>@item.id</td>
+    <td>@item.Name</td>
+    <td>@item.Employee.LastName @item.Employee.FirstName @item.Employee.SecondName</td>
+    <td>@item.Department.Name</td>
+    <td>
+        @Html.ActionLink("Остатки", "WarehouseRests", new { }, new {@class="btn btn-dark" })
+    </td>
+</tr>
+}
+
+</table>
